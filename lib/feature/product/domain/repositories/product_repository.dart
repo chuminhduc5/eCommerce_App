@@ -4,5 +4,5 @@ import 'package:ecommerce_app/feature/product/domain/entities/product_entity.dar
 
 abstract class ProductRepository {
   Future<Either<Failure, List<ProductEntity>>> getProducts();
-  Future<Either<Failure, ProductEntity>> getProductById(int id);
+  Future<Either<Failure, ProductEntity>> getProductById(String id);
 }

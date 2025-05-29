@@ -7,41 +7,60 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
-  Future<ProductModel> getProductById(int id);
+  Future<ProductModel> getProductById(String id);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
-  ProductRemoteDataSourceImpl();
-
-  final supabase = Supabase.instance.client;
+  final SupabaseClient _supabaseClient;
+  ProductRemoteDataSourceImpl(this._supabaseClient);
 
   @override
   Future<List<ProductModel>> getProducts() async {
+    // try {
+    //   // final response = await supabase
+    //   //     .from('products')
+    //   //     .select('*, categories(name), product_images(image_url)');
+    //   final response = await _supabaseClient.from("products").select();
+    //   logger.i("Raw response: ${response.runtimeType} - $response");
+    //   if (response is List) {
+    //     return response.map((e) => ProductModel.fromJson(e)).toList();
+    //   } else {
+    //     throw ServerException();
+    //   }
+    // } catch (e) {
+    //   logger.e("Lỗi khi lấy products: $e");
+    //   throw ServerException();
+    // }
+
     try {
-      // final response = await supabase
-      //     .from('products')
-      //     .select('*, categories(name), product_images(image_url)');
-      final response = await supabase
+      logger.i("Starting getProducts query");
+      final response = await _supabaseClient
           .from('products')
           .select('*, categories(name), product_images(image_url)');
-
+      logger.i("Raw response: ${response.runtimeType} - $response");
       if (response is List) {
-        return response.map((e) => ProductModel.fromJson(e)).toList();
+        if (response.isEmpty) {
+          logger.w("No products found");
+          return [];
+        }
+        return response.map((e) {
+          logger.i("Processing JSON item: $e");
+          return ProductModel.fromJson(e);
+        }).toList();
       } else {
+        logger.e("Unexpected response type: ${response.runtimeType}");
         throw ServerException();
       }
-      logger.i("Raw response: ${response.runtimeType} - $response");
-      return response.map((e) => ProductModel.fromJson(e)).toList();
     } catch (e) {
-      logger.e("Lỗi khi lấy products: $e");
+      logger.e("Error fetching products: $e");
       throw ServerException();
     }
   }
 
   @override
-  Future<ProductModel> getProductById(int id) async {
+  Future<ProductModel> getProductById(String id) async {
     try {
-      final response = await supabase
+      final response = await _supabaseClient
           .from('products')
           .select('*, categories(name), product_images(image_url)')
           .eq('id', id)

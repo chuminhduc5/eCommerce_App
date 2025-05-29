@@ -7,17 +7,15 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        title: 'E-commerce App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Scaffold(
-          appBar: AppBar(title: const Text('E-commerce App')),
-          body: ProductScreen(),
-        ),
+    return MaterialApp(
+      title: 'E-commerce App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('E-commerce App')),
+        body: ProductScreen(),
       ),
     );
   }

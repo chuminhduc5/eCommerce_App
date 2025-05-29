@@ -14,7 +14,7 @@ final supabaseClientProvider = Provider((ref) => Supabase.instance.client);
 // Provider cho ProductRemoteDataSource
 final productRemoteDataSourceProvider = Provider((ref) {
   final supabase = ref.watch(supabaseClientProvider);
-  return ProductRemoteDataSourceImpl();
+  return ProductRemoteDataSourceImpl(supabase);
 });
 
 // Provider cho ProductRepository

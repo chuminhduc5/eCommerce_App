@@ -1,7 +1,7 @@
 import 'package:ecommerce_app/feature/product/domain/entities/product_image_entity.dart';
 
 class ProducImageModel {
-  final String id;
+  final int id;
   final String productId;
   final String imageUrl;
 
@@ -13,7 +13,7 @@ class ProducImageModel {
 
   factory ProducImageModel.fromJson(Map<String, dynamic> json) {
     return ProducImageModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       productId: json['productId'] as String,
       imageUrl: json['imageUrl'] as String,
     );

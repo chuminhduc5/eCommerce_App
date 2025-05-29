@@ -33,7 +33,7 @@ class ProductModel {
       categoryId: json['category_id'] as int,
       categoryName: json['categories']?['name'] ?? '',
       createdAt: json['created_at'] != null
-          ? DateTime.parse(json['createdAt'] as String)
+          ? DateTime.parse(json['created_at'] as String)
           : null,
     );
   }
