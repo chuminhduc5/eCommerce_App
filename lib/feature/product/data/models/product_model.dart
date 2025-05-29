@@ -1,12 +1,13 @@
 import 'package:ecommerce_app/feature/product/domain/entities/product_entity.dart';
 
 class ProductModel {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final double price;
   final List<String> imageUrl;
-  final String? categoryId;
+  final int categoryId;
+  final String categoryName;
   final DateTime? createdAt;
 
   ProductModel({
@@ -15,19 +16,23 @@ class ProductModel {
     required this.description,
     required this.price,
     required this.imageUrl,
-    this.categoryId,
+    required this.categoryId,
+    required this.categoryName,
     this.createdAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    final List<dynamic> imageList = json['product_images'] ?? [];
+
     return ProductModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String,
       price: (json['price'] as num).toDouble(),
-      imageUrl: List<String>.from(json['imageUrl'] as List<dynamic>),
-      categoryId: json['categoryId'] as String?,
-      createdAt: json['createdAt'] != null
+      imageUrl: imageList.map((e) => e['image_url'] as String).toList(),
+      categoryId: json['category_id'] as int,
+      categoryName: json['categories']?['name'] ?? '',
+      createdAt: json['created_at'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : null,
     );
@@ -37,11 +42,10 @@ class ProductModel {
     return {
       'id': id,
       'name': name,
-      'description': description,
       'price': price,
-      'imageUrl': imageUrl,
-      'categoryId': categoryId,
-      'createdAt': createdAt?.toIso8601String(),
+      'category_id': categoryId,
+      'category_name': categoryName,
+      'imageUrls': imageUrl,
     };
   }
 
@@ -52,7 +56,8 @@ class ProductModel {
       description: description,
       price: price,
       imageUrl: imageUrl,
-      categoryId: categoryId ?? '',
+      categoryId: categoryId,
+      categoryName: categoryName,
       createdAt: createdAt,
     );
   }

@@ -1,12 +1,14 @@
+import 'package:ecommerce_app/feature/product/data/models/product_model.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductEntity extends Equatable {
-  final String id;
+  final int id;
   final String name;
   final String description;
   final double price;
   final List<String> imageUrl;
-  final String categoryId;
+  final int categoryId;
+  final String categoryName;
   final DateTime? createdAt;
 
   const ProductEntity({
@@ -16,6 +18,7 @@ class ProductEntity extends Equatable {
     required this.price,
     required this.imageUrl,
     required this.categoryId,
+    required this.categoryName,
     this.createdAt,
   });
 
@@ -27,6 +30,7 @@ class ProductEntity extends Equatable {
         price,
         imageUrl,
         categoryId,
+        categoryName,
         createdAt,
       ];
 }
