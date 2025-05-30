@@ -16,35 +16,15 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getProducts() async {
-    // try {
-    //   // final response = await supabase
-    //   //     .from('products')
-    //   //     .select('*, categories(name), product_images(image_url)');
-    //   final response = await _supabaseClient.from("products").select();
-    //   logger.i("Raw response: ${response.runtimeType} - $response");
-    //   if (response is List) {
-    //     return response.map((e) => ProductModel.fromJson(e)).toList();
-    //   } else {
-    //     throw ServerException();
-    //   }
-    // } catch (e) {
-    //   logger.e("Lỗi khi lấy products: $e");
-    //   throw ServerException();
-    // }
-
     try {
-      logger.i("Starting getProducts query");
       final response = await _supabaseClient
           .from('products')
           .select('*, categories(name), product_images(image_url)');
-      logger.i("Raw response: ${response.runtimeType} - $response");
       if (response is List) {
         if (response.isEmpty) {
-          logger.w("No products found");
           return [];
         }
         return response.map((e) {
-          logger.i("Processing JSON item: $e");
           return ProductModel.fromJson(e);
         }).toList();
       } else {

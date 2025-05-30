@@ -1,18 +1,18 @@
 import 'package:ecommerce_app/feature/product/domain/entities/product_image_entity.dart';
 
-class ProducImageModel {
+class ProductImageModel {
   final int id;
   final String productId;
   final String imageUrl;
 
-  ProducImageModel({
+  ProductImageModel({
     required this.id,
     required this.productId,
     required this.imageUrl,
   });
 
-  factory ProducImageModel.fromJson(Map<String, dynamic> json) {
-    return ProducImageModel(
+  factory ProductImageModel.fromJson(Map<String, dynamic> json) {
+    return ProductImageModel(
       id: json['id'] as int,
       productId: json['productId'] as String,
       imageUrl: json['imageUrl'] as String,

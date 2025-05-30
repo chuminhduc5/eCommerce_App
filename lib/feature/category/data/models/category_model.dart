@@ -1,24 +1,18 @@
+import 'package:ecommerce_app/feature/category/domain/entities/category_entity.dart';
+
 class CategoryModel {
-  final String id;
+  final int id;
   final String name;
-  final String description;
-  final DateTime? createdAt;
 
   CategoryModel({
     required this.id,
     required this.name,
-    required this.description,
-    this.createdAt,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
-      description: json['description'] as String,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
-          : null,
     );
   }
 
@@ -26,8 +20,13 @@ class CategoryModel {
     return {
       'id': id,
       'name': name,
-      'description': description,
-      'created_at': createdAt?.toIso8601String(),
     };
+  }
+
+  CategoryEntity toEntity() {
+    return CategoryEntity(
+      id: id,
+      name: name,
+    );
   }
 }
